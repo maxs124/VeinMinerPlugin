@@ -1,0 +1,8 @@
+name: VeinMinerPlugin
+version: 1.0
+main: com.mshmelev.veinminer.Main
+description: Vein Miner Plugin
+author: maxs
+libraries:
+ - com.google.code.gson:gson:2.8.7
+api-version: 1.13
