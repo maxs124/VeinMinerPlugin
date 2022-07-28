@@ -11,7 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin
 class VeinMinerPickaxe(val main: JavaPlugin) {
     companion object {
         val basicpick = ItemStack(Material.IRON_PICKAXE)
-
     }
 
     fun basicPickRecipe() : ShapedRecipe {

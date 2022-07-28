@@ -49,5 +49,5 @@ class BlockFinder {
 }
 
 data class MiningContext(
-    val player: Player,
+    val player: Player
 )

@@ -2,7 +2,7 @@ package com.mshmelev.veinminer.listeners
 
 import com.mshmelev.veinminer.recipies.VeinMinerPickaxe
 import com.mshmelev.veinminer.util.BlockFinder
-import com.mshmelev.veinminer.util.BaseBlock
+import com.mshmelev.veinminer.util.BlockFinder2
 import com.mshmelev.veinminer.util.MiningContext
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
@@ -21,7 +21,7 @@ class BlockBreakEvent : Listener {
         if (event.player.inventory.itemInMainHand == pickaxe) {
             Bukkit.getServer().broadcast(Component.text("${blockloc.blockX}, ${blockloc.blockY}, ${blockloc.blockZ} | ${block.type}"))
 
-            BlockFinder().iterate(listOf(block), MiningContext(event.player))
+            BlockFinder2().iterate(block, MiningContext(event.player))
 
         }
     }

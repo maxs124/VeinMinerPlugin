@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.7.0"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    // gradlew shadowRun
 }
 
 group = "com.mshmelev"
@@ -17,13 +18,13 @@ repositories {
 
 dependencies {
     //paper api
-    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19.1-R0.1-SNAPSHOT")
 
     //nbt api
-    implementation("de.tr7zw:item-nbt-api-plugin:2.10.0")
+//    implementation("de.tr7zw:item-nbt-api-plugin:2.10.0")
 
     //command api
-    implementation("dev.jorel:commandapi-shade:8.4.1")
+//    implementation("dev.jorel:commandapi-shade:8.4.1")
 
     // Bukkit only - plugin yml
     bukkitLibrary("com.google.code.gson", "gson", "2.8.7")
