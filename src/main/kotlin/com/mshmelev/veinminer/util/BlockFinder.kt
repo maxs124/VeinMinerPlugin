@@ -7,47 +7,40 @@ import org.bukkit.inventory.ItemStack
 
 
 class BlockFinder {
-    private var maxBlocks = 500
+    fun iterate(currBlock: Block, ctx: MiningContext) {
+        val originalBlockType = currBlock.type
+        if (originalBlockType == Material.AIR) return
+        val blockQueue = mutableListOf(currBlock)
+        val minedBlocks = mutableListOf<Block>()
+        val relBlock: (Int, Int, Int, Block) -> Block = { x: Int, y: Int, z: Int, cur_block: Block ->
+            ctx.player.world.getBlockAt(cur_block.x + x, cur_block.y + y, cur_block.z + z)
+        }
 
-    tailrec fun iterate(currBlocks: List<Block>, ctx: MiningContext) {
-        val matchedBlocks = mutableListOf<Block>()
-        currBlocks.forEach { currBlock ->
-            for (x1 in currBlock.x - 1..currBlock.x + 1) {
-                for (y1 in currBlock.y - 1..currBlock.y + 1) {
-                    for (z1 in currBlock.z - 1..currBlock.z + 1) {
-                        ctx.player.world.getBlockAt(x1, y1, z1).let { testBlock ->
-                            println("CurrBlock: ${currBlock.type} | ${currBlock.x}, ${currBlock.y}, ${currBlock.z}")
-                            println("TestBlock: ${testBlock.type} | ${testBlock.x}, ${testBlock.y}, ${testBlock.z}")
-                            if (testBlock.type == currBlock.type) {
-                                if (testBlock.type != Material.AIR) {
-                                    println("Types matched!!!")
-                                    val minedItem = ItemStack(currBlock.type)
-                                    matchedBlocks.add(testBlock)
-                                    matchedBlocks.remove(currBlock)
-                                    testBlock.type = Material.AIR
-                                    ctx.player.inventory.addItem(minedItem)
-                                    maxBlocks--
-                                } else {
-                                    println("air")
-                                }
-                            } else {
-                                println("Types did NOT match...")
-                            }
+        while (blockQueue.isNotEmpty()) {
+            if (ctx.maxBlox < 0) break
+            val tempBlock: Block = blockQueue.removeAt(0)
+            ctx.maxBlox--
+            for (x1 in -1..1) {
+                for (y1 in -1..1) {
+                    for (z1 in -1..1) {
+                        if ((x1 == y1) and (y1 == z1) and (z1 == 0)) continue
+                        val testBlock = relBlock(x1, y1, z1, tempBlock)
+                        if (testBlock in minedBlocks) continue
+                        if (testBlock.type == Material.AIR) continue
+                        if (testBlock.type == originalBlockType && testBlock.type != Material.AIR) {
+                            blockQueue.add(testBlock)
+                            minedBlocks.add(testBlock)
+                            ctx.player.inventory.addItem(ItemStack(testBlock.type))
+                            testBlock.type = Material.AIR
                         }
                     }
                 }
             }
         }
-        if (maxBlocks <= 0) {
-            iterate(matchedBlocks, ctx)
-        } else {
-            return
-        }
-        //iterate(currBlocks, ctx)
     }
-
 }
 
 data class MiningContext(
-    val player: Player
+    val player: Player,
+    var maxBlox: Int
 )

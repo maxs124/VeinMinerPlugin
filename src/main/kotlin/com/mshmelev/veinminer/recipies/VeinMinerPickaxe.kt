@@ -1,24 +1,25 @@
 package com.mshmelev.veinminer.recipies
 
 import net.kyori.adventure.text.Component
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.plugin.java.JavaPlugin
 
-class VeinMinerPickaxe(val main: JavaPlugin) {
+
+class VeinMinerPickaxe(var main: JavaPlugin) {
     companion object {
-        val basicpick = ItemStack(Material.IRON_PICKAXE)
+        lateinit var basicpick: ItemStack
     }
 
-    fun basicPickRecipe() : ShapedRecipe {
-        val meta = basicpick.itemMeta
+    fun createBasicPick(): ShapedRecipe {
+        val item = ItemStack(Material.IRON_PICKAXE)
+        val meta = item.itemMeta
         meta.displayName(Component.text("§fBasic Vein Miner Pickaxe"))
-        basicpick.itemMeta = meta
         val key = NamespacedKey(main, "basic_vein_miner_pickaxe")
-        val recipe = ShapedRecipe(key, basicpick)
+
+        val recipe = ShapedRecipe(key, item)
 
         recipe.shape(
             "IRI",
@@ -30,8 +31,9 @@ class VeinMinerPickaxe(val main: JavaPlugin) {
         recipe.setIngredient('I', Material.IRON_INGOT)
         recipe.setIngredient('S', Material.STICK)
 
-        Bukkit.addRecipe(recipe)
-
+        item.itemMeta = meta
+        basicpick = item
         return recipe
+
     }
 }

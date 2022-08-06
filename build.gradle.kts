@@ -14,17 +14,21 @@ repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://hub.jeff-media.com/nexus/repository/jeff-media-public/")
 }
 
 dependencies {
+    //MorePersistentDataTypes
+    implementation("com.jeff_media:MorePersistentDataTypes:2.3.1")
+
     //paper api
     compileOnly("io.papermc.paper:paper-api:1.19.1-R0.1-SNAPSHOT")
 
     //nbt api
-//    implementation("de.tr7zw:item-nbt-api-plugin:2.10.0")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.10.0")
 
     //command api
-//    implementation("dev.jorel:commandapi-shade:8.4.1")
+    implementation("dev.jorel:commandapi-shade:8.5.0")
 
     // Bukkit only - plugin yml
     bukkitLibrary("com.google.code.gson", "gson", "2.8.7")
